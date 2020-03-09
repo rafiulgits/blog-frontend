@@ -3,6 +3,7 @@ import { Layout } from "../components/base";
 import { Helmet } from "react-helmet";
 import { TextInput } from "../components/widgets/forms";
 import { Button, SpinnerButton } from "../components/widgets/buttons";
+import { login } from "../actions/auth";
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -11,7 +12,9 @@ class LoginForm extends React.Component {
     this.state = {
       email: null,
       password: null,
-      isLogging: false
+      isLogging: false,
+      hasError: false,
+      errorMessages: []
     };
 
     this.handleEmailInput = this.handleEmailInput.bind(this);
@@ -36,7 +39,46 @@ class LoginForm extends React.Component {
     this.setState({
       isLogging: true
     });
+
+    const body = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    login(this.loginCallBack, body);
   }
+
+  loginCallBack = (err, payload) => {
+    this.setState({ isLogging: false });
+    if (!err) {
+      localStorage.setItem("bearer", payload.bearer);
+      localStorage.setItem("auth", true);
+      window.location.replace("/");
+    } else {
+      this.manageErrors(err);
+    }
+  };
+
+  manageErrors = err => {
+    if (err.response) {
+      var errorMessages = [];
+      if (err.response.data.Email) {
+        errorMessages.push(err.response.data.Email.errors[0]["errorMessage"]);
+      }
+      if (err.response.data.Password) {
+        errorMessages.push(
+          err.response.data.Password.errors[0]["errorMessage"]
+        );
+      }
+      this.setState({
+        hasError: true,
+        errorMessages: errorMessages
+      });
+      return;
+    } else {
+      alert(err);
+      return;
+    }
+  };
 
   getCurrentButton() {
     if (this.state.isLogging) {
@@ -57,21 +99,39 @@ class LoginForm extends React.Component {
     );
   }
 
+  getErrorMessages() {
+    if (this.state.hasError) {
+      return (
+        <div className="alert alert-danger">
+          {this.state.errorMessages.map((item, index) => (
+            <strong key={index}>{item}</strong>
+          ))}
+        </div>
+      );
+    }
+    return <span />;
+  }
+
   render() {
     return (
-      <form onSubmit={this.handleLoginAttempt}>
-        <TextInput
-          type="email"
-          label="Email"
-          onChange={this.handleEmailInput}
-        />
-        <TextInput
-          type="password"
-          label="Password"
-          onChange={this.handlePasswordInput}
-        />
-        {this.getCurrentButton()}
-      </form>
+      <div>
+        {this.getErrorMessages()}
+        <form method="POST" onSubmit={this.handleLoginAttempt}>
+          <TextInput
+            type="email"
+            label="Email"
+            onChange={this.handleEmailInput}
+          />
+          <TextInput
+            type="password"
+            label="Password"
+            onChange={this.handlePasswordInput}
+            required={true}
+            minLength="8"
+          />
+          {this.getCurrentButton()}
+        </form>
+      </div>
     );
   }
 }

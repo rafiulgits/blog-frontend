@@ -12,6 +12,9 @@ const TextInput = props => {
         placeholder={props.placeholder}
         onChange={props.onChange}
         value={props.value}
+        minLength={props.minLength}
+        maxLength={props.maxLength}
+        required={props.required}
       />
     </div>
   );
@@ -22,7 +25,10 @@ TextInput.prototype = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  minLength: PropTypes.string,
+  maxLength: PropTypes.string,
+  required: PropTypes.bool
 };
 
 const CheckBox = props => {
