@@ -52,7 +52,7 @@ class Navbar extends React.Component {
               <MDBDropdownItem className="font-weight-bold" href="/account">
                 {this.props.user ? this.props.user.name : "First Name"}
               </MDBDropdownItem>
-              <MDBDropdownItem className="font-weight-bold" href="#!">
+              <MDBDropdownItem className="font-weight-bold" href="/logout">
                 Logout
               </MDBDropdownItem>
             </MDBDropdownMenu>
@@ -69,7 +69,7 @@ class Navbar extends React.Component {
           </MDBNavLink>
         </MDBNavItem>
         <MDBNavItem>
-          <MDBNavLink to="#">
+          <MDBNavLink to="/signup">
             <strong> Signup</strong>
           </MDBNavLink>
         </MDBNavItem>

@@ -12,6 +12,7 @@ const Button = props => {
       style={{ ...props.style }}
       onClick={props.onClick}
       onSubmit={props.onSubmit}
+      type={props.type}
     >
       {props.children}
     </button>
@@ -21,6 +22,7 @@ const Button = props => {
 Button.prototype = {
   className: PropTypes.string,
   style: PropTypes.object,
+  type: PropTypes.string,
   onClick: PropTypes.func,
   onSubmit: PropTypes.func,
   disabled: PropTypes.bool
