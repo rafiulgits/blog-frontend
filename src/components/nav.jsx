@@ -39,7 +39,7 @@ class Navbar extends React.Component {
         <MDBNavItem>
           <MDBNavLink to="#">
             <strong style={{ whiteSpace: "nowrap" }}>
-              <i class="fas fa-feather-alt"></i> Publish article
+              <i className="fas fa-feather-alt"></i> Publish article
             </strong>
           </MDBNavLink>
         </MDBNavItem>
