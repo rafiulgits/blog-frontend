@@ -12,3 +12,16 @@ export const login = (callback, body) => {
       callback(err, null);
     });
 };
+
+export const registration = (callback, body) => {
+  const data = JSON.stringify(body);
+  axios
+    .post(`${SERVER}/api/User`, data, baseConfig)
+    .then(res => {
+      callback(null, res.data);
+    })
+    .catch(err => {
+      console.log(err.response);
+      callback(err, null);
+    });
+};

@@ -33,8 +33,8 @@ class Navbar extends React.Component {
     });
   }
 
-  render() {
-    const userItems = (
+  authenticatedItems() {
+    return (
       <MDBNavbarNav right>
         <MDBNavItem>
           <MDBNavLink to="#">
@@ -50,7 +50,7 @@ class Navbar extends React.Component {
             </MDBDropdownToggle>
             <MDBDropdownMenu className="dropdown-default">
               <MDBDropdownItem className="font-weight-bold" href="/account">
-                {this.props.user ? this.props.user.name : "First Name"}
+                Profile
               </MDBDropdownItem>
               <MDBDropdownItem className="font-weight-bold" href="/logout">
                 Logout
@@ -60,8 +60,10 @@ class Navbar extends React.Component {
         </MDBNavItem>
       </MDBNavbarNav>
     );
+  }
 
-    const guestItems = (
+  anonymousItems() {
+    return (
       <MDBNavbarNav right>
         <MDBNavItem>
           <MDBNavLink to="/login">
@@ -75,7 +77,16 @@ class Navbar extends React.Component {
         </MDBNavItem>
       </MDBNavbarNav>
     );
+  }
 
+  getNavItems() {
+    if (localStorage.getItem("auth")) {
+      return this.authenticatedItems();
+    }
+    return this.anonymousItems();
+  }
+
+  render() {
     return (
       <div style={{ height: "60px" }}>
         <MDBNavbar color="black" dark expand="md" fixed="top">
@@ -105,8 +116,7 @@ class Navbar extends React.Component {
                 </form>
               </MDBNavItem>
             </MDBNavbarNav>
-            {this.props.isAuthenticated ? userItems : guestItems}
-            {userItems}
+            {this.getNavItems()}
           </MDBCollapse>
         </MDBNavbar>
       </div>
