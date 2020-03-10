@@ -2,24 +2,22 @@ import React from "react";
 import style from "./styles/article.module.css";
 
 const ArticleItem = props => {
+  let blogUrl = `/blog/${props.data.author.blogName}`;
+  let authorName = `${props.data.author.firstName} ${props.data.author.lastName}`;
+  let timeStamp = new Date(props.data.createdOn).toLocaleString();
+
   return (
     <article className={style.item}>
-      <h2 className={style.itemTitle}>What is Lorem Ipsum?</h2>
+      <h2 className={style.itemTitle}>{props.data.title}</h2>
       <h6>
-        by <span className={style.itemAuthor}>Rafiul Islam</span> on
-        <span className={style.itemDateTime}> 3/10/2020, 9:57:15 AM</span>
+        {"by "}
+        <a className={style.itemAuthor} href={blogUrl}>
+          {authorName}
+        </a>
+        {" on "}
+        <span className={style.itemDateTime}> {timeStamp}</span>
       </h6>
-      <p className={style.itemBody}>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
-      </p>
+      <p className={style.itemBody}>{props.data.body}</p>
     </article>
   );
 };
