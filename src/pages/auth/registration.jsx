@@ -1,9 +1,9 @@
 import React from "react";
-import { Layout } from "../components/base";
+import { Layout } from "../../components/base";
 import { Helmet } from "react-helmet";
-import { TextInput } from "../components/widgets/forms";
-import { Button, SpinnerButton } from "../components/widgets/buttons";
-import { registration } from "../actions/auth";
+import { TextInput } from "../../components/widgets/forms";
+import { Button, SpinnerButton } from "../../components/widgets/buttons";
+import { registration } from "../../actions/auth";
 
 class RegistrationForm extends React.Component {
   constructor(props) {

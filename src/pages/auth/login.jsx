@@ -1,9 +1,9 @@
 import React from "react";
-import { Layout } from "../components/base";
+import { Layout } from "../../components/base";
 import { Helmet } from "react-helmet";
-import { TextInput } from "../components/widgets/forms";
-import { Button, SpinnerButton } from "../components/widgets/buttons";
-import { login } from "../actions/auth";
+import { TextInput } from "../../components/widgets/forms";
+import { Button, SpinnerButton } from "../../components/widgets/buttons";
+import { login } from "../../actions/auth";
 
 class LoginForm extends React.Component {
   constructor(props) {
