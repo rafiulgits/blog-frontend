@@ -17,6 +17,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import UserThumb from "../static/images/user.png";
+import { AUTH, PROFILE } from "../actions/config";
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -34,10 +35,11 @@ class Navbar extends React.Component {
   }
 
   authenticatedItems() {
+    let user = JSON.parse(localStorage.getItem(PROFILE));
     return (
       <MDBNavbarNav right>
         <MDBNavItem>
-          <MDBNavLink to="#">
+          <MDBNavLink to="/create-article">
             <strong style={{ whiteSpace: "nowrap" }}>
               <i className="fas fa-feather-alt"></i> Publish article
             </strong>
@@ -50,7 +52,7 @@ class Navbar extends React.Component {
             </MDBDropdownToggle>
             <MDBDropdownMenu className="dropdown-default">
               <MDBDropdownItem className="font-weight-bold" href="/account">
-                Profile
+                {user.firstName}
               </MDBDropdownItem>
               <MDBDropdownItem className="font-weight-bold" href="/logout">
                 Logout
@@ -80,7 +82,7 @@ class Navbar extends React.Component {
   }
 
   getNavItems() {
-    if (localStorage.getItem("auth")) {
+    if (localStorage.getItem(AUTH)) {
       return this.authenticatedItems();
     }
     return this.anonymousItems();
@@ -101,8 +103,9 @@ class Navbar extends React.Component {
           >
             <MDBNavbarNav center="true">
               <MDBNavItem>
-                <form className="form-inline" action="search">
+                <form className="form-inline" action="/search">
                   <input
+                    name="query"
                     className="form-control mr-2"
                     placeholder="Find article"
                   />
@@ -111,7 +114,7 @@ class Navbar extends React.Component {
                     color="white"
                     className="btn-md mr-0 ml-0"
                   >
-                    Search
+                    <i className="fas fa-search"></i>
                   </MDBBtn>
                 </form>
               </MDBNavItem>

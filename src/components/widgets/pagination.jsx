@@ -35,20 +35,25 @@ class Pagination extends React.Component {
   calculatePageNumbers = () => {
     let selectedPage = this.props.selectedPage;
     if (this.props.lastPage) {
+      console.log("block");
       if (selectedPage > 2) {
+        console.log("block 1");
         this.setState({
           pageNumbers: [selectedPage - 2, selectedPage - 1, selectedPage]
         });
+        return;
       } else {
         this.setState({
           pageNumbers: [1, 2]
         });
+        return;
       }
     }
     if (selectedPage > 2) {
       this.setState({
         pageNumbers: [selectedPage - 1, selectedPage, selectedPage + 1]
       });
+      return;
     }
   };
 

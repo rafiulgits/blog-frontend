@@ -95,8 +95,6 @@ class RegistrationForm extends React.Component {
   registrationCallback = (err, payload) => {
     this.setState({ isRequesting: false });
     if (!err) {
-      localStorage.setItem("bearer", payload.bearer);
-      localStorage.setItem("auth", true);
       window.location.replace("/");
     } else {
       this.manageErrors(err);

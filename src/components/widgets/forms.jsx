@@ -2,7 +2,25 @@ import React from "react";
 import PropTypes from "prop-types";
 import style from "./styles/Forms.module.css";
 
-const TextInput = props => {
+const TextAreaBuilder = props => {
+  return (
+    <div className={style.textinput}>
+      <label>{props.label}</label>
+      <textarea
+        className="form-control"
+        placeholder={props.placeholder}
+        onChange={props.onChange}
+        defaultValue={props.value}
+        minLength={props.minLength}
+        maxLength={props.maxLength}
+        required={props.required}
+        style={{ ...props.style }}
+      ></textarea>
+    </div>
+  );
+};
+
+const InputBuilder = props => {
   return (
     <div className={style.textinput}>
       <label>{props.label}</label>
@@ -15,9 +33,19 @@ const TextInput = props => {
         minLength={props.minLength}
         maxLength={props.maxLength}
         required={props.required}
+        style={{ ...props.style }}
       />
     </div>
   );
+};
+
+const TextInput = props => {
+  if (typeof props.type === "string") {
+    if (props.type.toLowerCase() === "textarea") {
+      return TextAreaBuilder(props);
+    }
+  }
+  return InputBuilder(props);
 };
 
 TextInput.prototype = {

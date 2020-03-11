@@ -50,8 +50,6 @@ class LoginForm extends React.Component {
   loginCallBack = (err, payload) => {
     this.setState({ isLogging: false });
     if (!err) {
-      localStorage.setItem("bearer", payload.bearer);
-      localStorage.setItem("auth", true);
       window.location.replace("/");
     } else {
       this.manageErrors(err);

@@ -45,7 +45,7 @@ class SingleArticle extends React.Component {
     return (
       <Layout>
         <Helmet>
-          <title>Blogger | Title</title>
+          <title>Blogger | Article</title>
         </Helmet>
         <div className="flex-center">
           <div className="col-md-6">{this.itemRenderer()}</div>
