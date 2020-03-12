@@ -64,19 +64,26 @@ class Home extends React.Component {
     ));
   };
 
+  renderPagination() {
+    if (this.state.articleList.length === 0) {
+      return <h2 className="text-center mt-5">No content available</h2>;
+    }
+    return (
+      <Pagination
+        onPageSelect={this.pageSelectionCallback}
+        selectedPage={this.state.selectedPage}
+        lastPage={this.state.isLastPage}
+      />
+    );
+  }
+
   renderContent() {
     if (this.state.shouldRender) {
       return (
         <div className="flex-center mt-1">
           <div className="col-md-7">
             {this.listRenderer()}
-            <div className="flex-center">
-              <Pagination
-                onPageSelect={this.pageSelectionCallback}
-                selectedPage={this.state.selectedPage}
-                lastPage={this.state.isLastPage}
-              />
-            </div>
+            <div className="flex-center">{this.renderPagination()}</div>
           </div>
         </div>
       );

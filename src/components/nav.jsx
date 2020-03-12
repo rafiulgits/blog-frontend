@@ -92,7 +92,12 @@ class Navbar extends React.Component {
     return (
       <div style={{ height: "60px" }}>
         <MDBNavbar color="black" dark expand="md" fixed="top">
-          <MDBNavbarBrand href="/">
+          <MDBNavbarBrand
+            href="/"
+            onClick={event => {
+              window.location.replace("/");
+            }}
+          >
             <i
               className="fas fa-bold"
               style={{
