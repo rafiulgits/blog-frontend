@@ -78,15 +78,39 @@ const ArticleItem = props => {
   );
 };
 
-const ArticlePreview = props => {
-  const body = props.article.body;
-  var previewBody = null;
+const PreviewBodyBuilder = props => {
   const previewSize = 250;
-  if (body.length >= previewSize) {
+  const body = props.body;
+  var previewBody = null;
+  var hasMore = false;
+  if (body.length > previewSize) {
     previewBody = body.substr(0, previewSize);
+    previewBody = `${previewBody}...`;
+    hasMore = true;
   } else {
     previewBody = body;
   }
+
+  if (hasMore) {
+    return (
+      <p className={style.itemBody}>
+        {previewBody}
+        <a className="btn btn-sm btn-dark" href={`/article/${props.id}`}>
+          Read More
+        </a>
+      </p>
+    );
+  } else {
+    return <p className={style.itemBody}>{previewBody}</p>;
+  }
+};
+
+const ArticlePreview = props => {
+  let actions = isAuthor(props.article) ? (
+    <ActionOptions id={props.article.id} />
+  ) : (
+    <span></span>
+  );
 
   return (
     <article className={style.item}>
@@ -105,10 +129,9 @@ const ArticlePreview = props => {
           {new Date(props.article.createdOn).toLocaleString()}
         </span>
       </h6>
-      <p className={style.itemBody}>
-        {previewBody}{" "}
-        <a href={`/article/${props.article.id}`}>...read full story</a>
-      </p>
+
+      <PreviewBodyBuilder body={props.article.body} id={props.article.id} />
+      <div>{actions}</div>
     </article>
   );
 };

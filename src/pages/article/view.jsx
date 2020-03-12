@@ -3,13 +3,15 @@ import { Layout } from "../../components/base";
 import { Helmet } from "react-helmet";
 import { ArticleItem } from "../../components/article";
 import { fetchArticleItem } from "../../actions/article";
+import { Loader, NotFound } from "../../components/misc";
 
 class SingleArticle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: null,
-      data: null
+      data: null,
+      isLoaded: false
     };
   }
 
@@ -27,16 +29,23 @@ class SingleArticle extends React.Component {
 
   loadedCallback = (err, data) => {
     if (err) {
+      this.setState({
+        isLoaded: true
+      });
       return;
     }
     this.setState({
-      data: data
+      data: data,
+      isLoaded: true
     });
   };
 
   itemRenderer() {
+    if (!this.state.isLoaded) {
+      return <Loader />;
+    }
     if (this.state.data === null) {
-      return <span></span>;
+      return <NotFound />;
     }
     return <ArticleItem data={this.state.data} />;
   }

@@ -3,13 +3,16 @@ import Helmet from "react-helmet";
 import { Layout } from "../../components/base";
 import { ArticleForm } from "../../components/forms";
 import { fetchArticleItem, updateArticle } from "../../actions/article";
+import { Loader, NotFound, Forbidden } from "../../components/misc";
+import { PROFILE } from "../../actions/config";
 
 class UpdateView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: null,
-      data: null
+      data: null,
+      isLoaded: false
     };
   }
   componentDidMount() {
@@ -26,15 +29,18 @@ class UpdateView extends React.Component {
 
   loadedCallback = (err, data) => {
     if (err) {
+      this.setState({
+        isLoaded: true
+      });
       return;
     }
     this.setState({
-      data: data
+      data: data,
+      isLoaded: true
     });
   };
 
   onPublish = body => {
-    console.log(body);
     updateArticle(this.onUpdateActionCallback, body);
   };
 
@@ -48,12 +54,24 @@ class UpdateView extends React.Component {
   };
 
   renderForm() {
-    if (this.state.data === null) {
-      return <span></span>;
+    if (!this.state.isLoaded) {
+      return <Loader />;
     }
+    if (this.state.data === null) {
+      return <NotFound />;
+    }
+    if (localStorage.getItem(PROFILE) === null) {
+      return <Forbidden />;
+    }
+    let user = JSON.parse(localStorage.getItem(PROFILE));
+    if (user.id !== this.state.data.authorId) {
+      return <Forbidden />;
+    }
+
     return (
       <div className="flex-center mt-5">
         <div className="col-md-6 list-group-item">
+          <h3 className="text-center">Update your article</h3>
           <ArticleForm
             data={this.state.data}
             onPublishCallback={this.onPublish}
@@ -62,6 +80,7 @@ class UpdateView extends React.Component {
       </div>
     );
   }
+
   render() {
     return (
       <Layout>

@@ -93,7 +93,16 @@ class Navbar extends React.Component {
       <div style={{ height: "60px" }}>
         <MDBNavbar color="black" dark expand="md" fixed="top">
           <MDBNavbarBrand href="/">
-            <strong>Blogger</strong>
+            <i
+              className="fas fa-bold"
+              style={{
+                backgroundColor: "white",
+                color: "black",
+                padding: "7px 10px 7px 10px",
+                borderRadius: "1px"
+              }}
+            ></i>
+            <strong style={{ paddingLeft: "20px" }}>Blogger</strong>
           </MDBNavbarBrand>
           <MDBNavbarToggler onClick={this.onClick} />
           <MDBCollapse
@@ -108,6 +117,7 @@ class Navbar extends React.Component {
                     name="query"
                     className="form-control mr-2"
                     placeholder="Find article"
+                    required={true}
                   />
                   <MDBBtn
                     type="submit"

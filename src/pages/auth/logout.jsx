@@ -10,7 +10,7 @@ const Logout = props => {
         <title>Logout | Blogger</title>
       </Helmet>
       <center className="mt-5">
-        <h6>You logged out</h6>
+        <h1>You logged out</h1>
       </center>
     </Layout>
   );

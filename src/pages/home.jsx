@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { ArticlePreview } from "../components/article";
 import { Pagination } from "../components/widgets/pagination";
 import { fetchArticlePage } from "../actions/article";
+import { Loader } from "../components/misc";
 
 const MAX_ARTICLE = 4;
 
@@ -80,7 +81,7 @@ class Home extends React.Component {
         </div>
       );
     }
-    return <span></span>;
+    return <Loader />;
   }
 
   pageSelectionCallback = pageNumber => {

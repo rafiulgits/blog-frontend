@@ -27,6 +27,7 @@ class CreateArticle extends React.Component {
 
         <div className="flex-center mt-5">
           <div className="col-md-6 list-group-item">
+            <h3 className="text-center">Share your thoughts</h3>
             <ArticleForm onPublishCallback={this.onPublish} />
           </div>
         </div>

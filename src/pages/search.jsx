@@ -3,13 +3,15 @@ import Helmet from "react-helmet";
 import { Layout } from "../components/base";
 import { ArticlePreview } from "../components/article";
 import { searchArticles } from "../actions/article";
+import { Loader } from "../components/misc";
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       articleList: [],
-      query: null
+      query: null,
+      isLoaded: false
     };
   }
 
@@ -28,7 +30,9 @@ class SearchView extends React.Component {
   };
 
   loadedCallback = (err, data) => {
+    this.setState({ isLoaded: true });
     if (err) {
+      alert(err);
       return;
     }
     if (data === null) {
@@ -42,6 +46,9 @@ class SearchView extends React.Component {
   };
 
   listRenderer = () => {
+    if (!this.state.isLoaded) {
+      return <Loader />;
+    }
     if (this.state.articleList.length === 0) {
       return <span></span>;
     }

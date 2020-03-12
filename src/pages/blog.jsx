@@ -4,11 +4,17 @@ import { Layout } from "../components/base";
 import { fetchArticlesByBlog } from "../actions/article";
 import { ArticlePreview } from "../components/article";
 import { MDBJumbotron } from "mdbreact";
+import { Loader, NotFound } from "../components/misc";
 
 class BlogView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: null, articleList: [] };
+    this.state = {
+      name: null,
+      articleList: [],
+      isLoaded: false,
+      isError: false
+    };
   }
 
   componentDidMount() {
@@ -25,18 +31,26 @@ class BlogView extends React.Component {
 
   onBlogArticleActionCallback = (err, data) => {
     if (err) {
+      this.setState({ isLoaded: true, isError: true });
       return;
     }
     if (!Array.isArray(data)) {
+      this.setState({ isLoaded: true });
       return;
     }
 
-    this.setState({ articleList: data });
+    this.setState({ articleList: data, isLoaded: true });
   };
 
   listRenderer = () => {
+    if (!this.state.isLoaded) {
+      return <Loader />;
+    }
+    if (this.state.isError) {
+      return <NotFound />;
+    }
     if (this.state.articleList.length === 0) {
-      return <span></span>;
+      return <h1 className="text-center">No Content Found</h1>;
     }
     return this.state.articleList.map((item, index) => (
       <ArticlePreview key={index} article={item} />
