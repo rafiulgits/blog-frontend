@@ -52,7 +52,7 @@ class Navbar extends React.Component {
             </MDBDropdownToggle>
             <MDBDropdownMenu className="dropdown-default">
               <MDBDropdownItem className="font-weight-bold" href="/account">
-                {user.firstName}
+                {user.name}
               </MDBDropdownItem>
               <MDBDropdownItem className="font-weight-bold" href="/logout">
                 Logout

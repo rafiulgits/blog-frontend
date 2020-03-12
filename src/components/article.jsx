@@ -53,7 +53,7 @@ const onDeleteActionCallback = (err, data) => {
 
 const ArticleItem = props => {
   let blogUrl = `/blog/${props.data.author.blogName}`;
-  let authorName = `${props.data.author.firstName} ${props.data.author.lastName}`;
+  let authorName = `${props.data.author.name}`;
   let timeStamp = new Date(props.data.createdOn).toLocaleString();
   let actions = isAuthor(props.data) ? (
     <ActionOptions id={props.data.id} />
@@ -121,7 +121,7 @@ const ArticlePreview = props => {
           className={style.itemAuthor}
           href={`/blog/${props.article.author.blogName}`}
         >
-          {props.article.author.firstName}
+          {props.article.author.name}
         </a>
         {" on"}
         <span className={style.itemDateTime}>

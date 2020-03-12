@@ -19,9 +19,7 @@ const ProfileInformation = props => {
         />
       </div>
       <li className="list-group-item list-group-item-secondary text-left">
-        <strong>
-          Name : {user.firstName} {user.lastName}
-        </strong>
+        <strong>Name : {user.name}</strong>
       </li>
       <li className="list-group-item list-group-item-secondary text-left">
         <strong>Email : {user.email}</strong>
