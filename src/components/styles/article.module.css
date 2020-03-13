@@ -23,4 +23,15 @@
   line-height: 35px;
   padding: 10px 0px 10px 0px;
   font-weight: 400;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.itemBodyPreview {
+  margin: 0px;
+  letter-spacing: 0.5px;
+  font-size: 20px;
+  line-height: 35px;
+  padding: 10px 0px 10px 0px;
+  font-weight: 400;
 }

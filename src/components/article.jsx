@@ -93,7 +93,7 @@ const PreviewBodyBuilder = props => {
 
   if (hasMore) {
     return (
-      <p className={style.itemBody}>
+      <p className={style.itemBodyPreview}>
         {previewBody}
         <a className="btn btn-sm btn-dark" href={`/article/${props.id}`}>
           Read More
@@ -101,7 +101,7 @@ const PreviewBodyBuilder = props => {
       </p>
     );
   } else {
-    return <p className={style.itemBody}>{previewBody}</p>;
+    return <p className={style.itemBodyPreview}>{previewBody}</p>;
   }
 };
 
