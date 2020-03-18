@@ -1,7 +1,9 @@
 import React from "react";
 import { default as LoaderLib } from "react-loader-spinner";
+import PropTypes from "prop-types";
 import NotFoundImage from "../static/images/404.svg";
 import ForbiddenImage from "../static/images/angry.svg";
+import { MDBNotification } from "mdbreact";
 
 const Loader = props => {
   return (
@@ -33,4 +35,29 @@ const Forbidden = props => {
   );
 };
 
-export { Loader, NotFound, Forbidden };
+const Notification = props => {
+  return (
+    <MDBNotification
+      show
+      fade
+      iconClassName="text-primary"
+      title={props.title}
+      message={props.message}
+      text={props.text}
+      style={{
+        position: "fixed",
+        top: "10px",
+        right: "10px",
+        zIndex: 9999
+      }}
+    />
+  );
+};
+
+Notification.prototype = {
+  title: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  text: PropTypes.string
+};
+
+export { Loader, NotFound, Forbidden, Notification };

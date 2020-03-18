@@ -5,6 +5,7 @@ import { ArticleForm } from "../../components/forms";
 import { fetchArticleItem, updateArticle } from "../../actions/article";
 import { Loader, NotFound, Forbidden } from "../../components/misc";
 import { PROFILE } from "../../actions/config";
+import { filterHttpErrorMessages } from "../../util";
 
 class UpdateView extends React.Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class UpdateView extends React.Component {
     this.state = {
       id: null,
       data: null,
-      isLoaded: false
+      isLoaded: false,
+      isLoading: false
     };
   }
   componentDidMount() {
@@ -41,12 +43,15 @@ class UpdateView extends React.Component {
   };
 
   onPublish = body => {
+    this.setState({ isLoading: true });
     updateArticle(this.onUpdateActionCallback, body);
   };
 
   onUpdateActionCallback = (err, data) => {
+    this.setState({ isLoading: false });
     if (err) {
-      alert(err);
+      let messages = filterHttpErrorMessages(err);
+      alert(messages);
       return;
     }
     let articleLocation = `/article/${data.id}`;
@@ -75,6 +80,8 @@ class UpdateView extends React.Component {
           <ArticleForm
             data={this.state.data}
             onPublishCallback={this.onPublish}
+            buttonName="Update"
+            isLoading={this.state.isLoading}
           />
         </div>
       </div>

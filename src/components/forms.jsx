@@ -1,6 +1,6 @@
 import React from "react";
 import { TextInput } from "../components/widgets/forms";
-import { Button } from "../components/widgets/buttons";
+import { Button, SpinnerButton } from "../components/widgets/buttons";
 import DateTimePicker from "react-datetime-picker";
 
 import PropTypes from "prop-types";
@@ -8,7 +8,9 @@ import PropTypes from "prop-types";
 class ArticleForm extends React.Component {
   static propTypes = {
     onPublishCallback: PropTypes.func.isRequired,
-    data: PropTypes.object
+    data: PropTypes.object,
+    buttonName: PropTypes.string.isRequired,
+    isLoading: PropTypes.bool.isRequired
   };
 
   constructor(props) {
@@ -25,13 +27,13 @@ class ArticleForm extends React.Component {
 
   handleTitleInput(event) {
     this.setState({
-      title: event.target.value
+      title: event.target.value.trim()
     });
   }
 
   handleBodyInput(event) {
     this.setState({
-      body: event.target.value
+      body: event.target.value.trim()
     });
   }
 
@@ -57,6 +59,8 @@ class ArticleForm extends React.Component {
     }
     this.props.onPublishCallback(requestBody);
   };
+
+  onSubmitCallback = (err, data) => {};
 
   renderTitleInputField() {
     return (
@@ -98,19 +102,32 @@ class ArticleForm extends React.Component {
     );
   }
 
+  renderSubmitButton(name) {
+    if (this.props.isLoading) {
+      return (
+        <SpinnerButton smallSpin className="disabled btn-block mt-3 btn-green">
+          Requesting
+        </SpinnerButton>
+      );
+    }
+    return (
+      <Button
+        type="submit"
+        onSubmit={this.handleOnPublish}
+        className="btn-block btn-green mt-3"
+      >
+        {name}
+      </Button>
+    );
+  }
+
   render() {
     return (
       <form onSubmit={this.handleOnPublish}>
         {this.renderTitleInputField()}
         {this.renderBodyInputField()}
         {this.renderTimeStampField()}
-        <Button
-          className="mt-3 btn-green"
-          type="submit"
-          onSubmit={this.handleOnPublish}
-        >
-          Publish
-        </Button>
+        {this.renderSubmitButton(this.props.buttonName)}
       </form>
     );
   }

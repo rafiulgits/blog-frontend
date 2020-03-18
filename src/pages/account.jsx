@@ -7,6 +7,7 @@ import UserImage from "../static/images/user_dp.svg";
 
 const ProfileInformation = props => {
   let user = props.user;
+  let blogName = decodeURIComponent(props.user.blogName);
   return (
     <ul className="list-group">
       <div className="flex-center">
@@ -26,7 +27,7 @@ const ProfileInformation = props => {
       </li>
       <li className="list-group-item list-group-item-secondary text-left">
         <strong>
-          BlogName : <a href={`/blog/${user.blogName}`}>{user.blogName}</a>
+          BlogName : <a href={`/blog/${user.blogName}`}>{blogName}</a>
         </strong>
       </li>
     </ul>

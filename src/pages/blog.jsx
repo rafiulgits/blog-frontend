@@ -11,7 +11,8 @@ class BlogView extends React.Component {
     super(props);
     this.state = {
       name: null,
-      articleList: [],
+      loadedArticleList: [],
+      renderArticleList: [],
       isLoaded: false,
       isError: false
     };
@@ -19,8 +20,9 @@ class BlogView extends React.Component {
 
   componentDidMount() {
     const params = window.location.pathname.split("/");
+    let name = decodeURIComponent(params[2]);
     this.setState({
-      name: params[2]
+      name: name
     });
     this.blogArticlesLoader(params[2]);
   }
@@ -38,8 +40,12 @@ class BlogView extends React.Component {
       this.setState({ isLoaded: true });
       return;
     }
-
-    this.setState({ articleList: data, isLoaded: true });
+    data = data.reverse();
+    this.setState({
+      loadedArticleList: data,
+      renderArticleList: data,
+      isLoaded: true
+    });
   };
 
   listRenderer = () => {
@@ -49,13 +55,44 @@ class BlogView extends React.Component {
     if (this.state.isError) {
       return <NotFound />;
     }
-    if (this.state.articleList.length === 0) {
+    if (this.state.loadedArticleList.length === 0) {
       return <h1 className="text-center">No Content Found</h1>;
     }
-    return this.state.articleList.map((item, index) => (
+    return this.state.renderArticleList.map((item, index) => (
       <ArticlePreview key={index} article={item} />
     ));
   };
+
+  blogSearchEngine = text => {
+    if (this.state.loadedArticleList.length === 0) {
+      return;
+    }
+    if (text === "") {
+      this.setState({ renderArticleList: this.state.loadedArticleList });
+      return;
+    }
+    let filteredResult = this.state.loadedArticleList.filter(item => {
+      return item.title.indexOf(text) >= 0 || item.body.indexOf(text) >= 0;
+    });
+    this.setState({ renderArticleList: filteredResult });
+  };
+
+  inBlogSearch() {
+    return (
+      <div className="flex-center">
+        <div className="col-md-4 mt-2 mb-2">
+          <input
+            type="text"
+            placeholder={`Search on ${this.state.name}`}
+            className="form-control"
+            onChange={event => {
+              this.blogSearchEngine(event.target.value);
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   render() {
     return (
@@ -67,6 +104,7 @@ class BlogView extends React.Component {
           <div className="col-md-10">
             <MDBJumbotron>
               <h1 className="display-4 text-center">@{this.state.name}</h1>
+              {this.inBlogSearch()}
             </MDBJumbotron>
           </div>
         </div>
