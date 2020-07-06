@@ -1,0 +1,8 @@
+.textinput {
+  display: block;
+}
+
+.textinput label {
+  font-weight: 400;
+  margin: 5px 0px 0px 2px;
+}

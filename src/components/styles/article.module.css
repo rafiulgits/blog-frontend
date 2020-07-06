@@ -1,0 +1,37 @@
+.item {
+  margin: 20px 0px 40px 0px;
+}
+
+.itemTitle {
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
+.itemAuthor {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.itemDateTime {
+  font-weight: bold;
+}
+
+.itemBody {
+  margin: 0px;
+  letter-spacing: 0.5px;
+  font-size: 20px;
+  line-height: 35px;
+  padding: 10px 0px 10px 0px;
+  font-weight: 400;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.itemBodyPreview {
+  margin: 0px;
+  letter-spacing: 0.5px;
+  font-size: 20px;
+  line-height: 35px;
+  padding: 10px 0px 10px 0px;
+  font-weight: 400;
+}
